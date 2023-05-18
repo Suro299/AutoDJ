@@ -101,13 +101,12 @@ def is_venv_present():
 
 def create_venv(): 
     print()
-    # with tqdm(total=6, desc="Create venv ", bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt}") as pbar:
-        # for _ in range(5):
-            # time.sleep(0.1)
-            # pbar.update(1)
-        # venv.create("./venv")
-        # pbar.update(1)
-    venv.create("./venv")
+    with tqdm(total=6, desc="Create venv ", bar_format="{l_bar}{bar}| {n_fmt}/{total_fmt}") as pbar:
+        for _ in range(5):
+            time.sleep(0.1)
+            pbar.update(1)
+        venv.create("./venv")
+        pbar.update(1)
     
     
             
