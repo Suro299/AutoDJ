@@ -385,14 +385,19 @@ def create_app(project_name, app_name):
                     print(colored(fr"  !! {project_name}\{app_name} Already exists  !! ", "red", attrs=["bold"]))
                     print(colored("---------------------------------------\n", "red", attrs=["bold"]))
                     return
+                else:
+                    os.system(f"cd {project_name} && python manage.py startapp {app_name}")
+                    
             else: 
                 if os.path.exists(f"{project_name}/{app_name}"):
                     print(colored("\n---------------------------------------", "red", attrs=["bold"]))
                     print(colored(f"  !! {project_name}/{app_name} Already exists  !! ", "red", attrs=["bold"]))
                     print(colored("---------------------------------------\n", "red", attrs=["bold"]))
                     return
+                else:
+                    os.system(f"cd {project_name} ; python manage.py startapp {app_name}")
+                    
             
-            os.system(f"cd {project_name} ; python manage.py startapp {app_name}")
 
             print(colored("\n------------------------------------------------------------", "green", attrs=["bold"]))
             print(colored(f'!! Application {app_name} was successfully created in {project_name} !! ', "green", attrs=["bold"]))
