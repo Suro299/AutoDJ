@@ -293,7 +293,8 @@ def app_views(project_name, app_name):
             if "def index(" not in text:
                 file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
 
-            print(f"{app_name} --> {app_name}/views.py Changed")
+        print(colored(f"\n{app_name} --> {project_name}/{app_name}/views.py Changed", "green"))
+            
 
 def static_media_apps(app_name, project_name):
     
