@@ -14,7 +14,11 @@
 
     -h   --> help
 
+
     <--- VENV --->
     --v  --> Create Venv
-    --av --> activate venv
-    --dv --> deactivate venv
+
+
+    <--- DJANGO ---> 
+    --sp project_name (default "core" )  -->  ( Create Project )
+    --sa app_name -p project_name  -->  ( Create App )
