@@ -3,7 +3,6 @@ import sys
 import time
 import platform
 
-
         
 try:
     from termcolor import colored
@@ -74,7 +73,7 @@ def start():
     print(colored("  <----------------------------------------------->", "black", attrs=["bold"]), end = "\n\n")
     
     if os.name == "nt":
-        print(colored("   py main.py -hh", "white", attrs=["bold"]), end = " ")
+        print(colored("   py main.py -h", "white", attrs=["bold"]), end = " ")
     else:   
         print(colored("   python3 main.py -h", "white", attrs=["bold"]), end = " ")
 
@@ -160,7 +159,7 @@ def create_project(project_name):
         print(colored("  !! Please activate venv !!", "red", attrs=["bold"]), end = "\n\n")
 
         if os.name == 'nt':
-            print(colored("  venv\Scripts\activate.bat", "white", attrs=["bold"]))
+            print(colored(r"  .\venv\Scripts\activate.bat", "white", attrs=["bold"]))
         else:
             print(colored("  source venv/bin/activate", "white", attrs=["bold"]))
         print(colored("-----------------------------------------------------", "red"), end = "\n\n") 
@@ -172,70 +171,133 @@ def create_project(project_name):
                 sys.exit()
 
 def template_creating(project_name, app_name):
-    if not(os.path.exists(f"{project_name}/{app_name}/templates")):
-        os.mkdir(f"{project_name}/{app_name}/templates")
-        os.mkdir(f"{project_name}/{app_name}/templates/{app_name}")
-        print(colored(f"{app_name} --> templates/{app_name} Creating", "green"))
+    if os.name == 'nt':
+        if not(os.path.exists(fr"{project_name}\{app_name}\templates")):
+                os.mkdir(fr"{project_name}\{app_name}\templates")
+                os.mkdir(fr"{project_name}\{app_name}\templates\{app_name}")
+                print(colored(fr"{app_name} --> templates\{app_name} Creating", "green"))
+
+                with open(fr"{project_name}\{app_name}\templates\{app_name}\index.html", "w") as file:
+                    print(colored(f"{app_name} --> {app_name}.html Creating", "green"))
+
+                    file.write("")
+                    file.write('{% load static %}\n\n' + '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta http-equiv="X-UA-Compatible" content="IE=edge">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' + """    <link rel="stylesheet" href="{% static """ + f""" '{app_name}/css/style.css' %""" + '}">' + f'\n    <title> {app_name} - index </title>\n</head>\n<body>\n  <h1> Barev </h1>  \n</body>\n</html>')
+                    print(colored(f"{app_name} --> {app_name}.html Changed", "green"))
+
+                print(colored(fr"{app_name} --> {project_name}\{app_name}\templates Creating", "green"))
+                
+        if not(os.path.exists(fr"{project_name}\{app_name}\static")):
+            os.mkdir(fr"{project_name}\{app_name}\static")
+            os.mkdir(fr"{project_name}\{app_name}\static\{app_name}")
     
-        with open(f"{project_name}/{app_name}/templates/{app_name}/index.html", "w") as file:
-            print(colored(f"{app_name} --> {app_name}.html Creating", "green"))
-            
-            file.write("")
-            file.write('{% load static %}\n\n' + '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta http-equiv="X-UA-Compatible" content="IE=edge">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' + """    <link rel="stylesheet" href="{% static """ + f""" '{app_name}/css/style.css' %""" + '}">' + f'\n    <title> {app_name} - index </title>\n</head>\n<body>\n  <h1> Barev </h1>  \n</body>\n</html>')
-            print(colored(f"{app_name} --> {app_name}.html Changed", "green"))
-        
-        print(colored(f"{app_name} --> {project_name}/{app_name}/templates Creating", "green"))
-        
-        
-        
-    if not(os.path.exists(f"{project_name}/{app_name}/static")):
-        os.mkdir(f"{project_name}/{app_name}/static")
-        os.mkdir(f"{project_name}/{app_name}/static/{app_name}")
+            os.mkdir(fr"{project_name}\{app_name}\static\{app_name}\css")
+                
+            with open(fr"{project_name}\{app_name}\static\{app_name}\css\style.css", "w") as file:
+                file.write("")
+                file.write("/* Karoche css a */\n\n")
+                print(colored(fr"{app_name} --> {project_name}\{app_name} CSS Creating", "green"))
+    
+            print(colored(f"{app_name} --> {project_name}\{app_name}\static Creating", "green"))
+    
+    
+    else:
+        if not(os.path.exists(f"{project_name}/{app_name}/templates")):
+            os.mkdir(f"{project_name}/{app_name}/templates")
+            os.mkdir(f"{project_name}/{app_name}/templates/{app_name}")
+            print(colored(f"{app_name} --> templates/{app_name} Creating", "green"))
 
-        os.mkdir(f"{project_name}/{app_name}/static/{app_name}/css")
-            
-        with open(f"{project_name}/{app_name}/static/{app_name}/css/style.css", "w") as file:
-            file.write("")
-            file.write("/* Karoche css a */\n\n")
-            print(colored(f"{app_name} --> {project_name}/{app_name} CSS Creating", "green"))
+            with open(f"{project_name}/{app_name}/templates/{app_name}/index.html", "w") as file:
+                print(colored(f"{app_name} --> {app_name}.html Creating", "green"))
 
-        print(colored(f"{app_name} --> {project_name}/{app_name}/static Creating", "green"))
+                file.write("")
+                file.write('{% load static %}\n\n' + '<!DOCTYPE html>\n<html lang="en">\n<head>\n    <meta charset="UTF-8">\n    <meta http-equiv="X-UA-Compatible" content="IE=edge">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n' + """    <link rel="stylesheet" href="{% static """ + f""" '{app_name}/css/style.css' %""" + '}">' + f'\n    <title> {app_name} - index </title>\n</head>\n<body>\n  <h1> Barev </h1>  \n</body>\n</html>')
+                print(colored(f"{app_name} --> {app_name}.html Changed", "green"))
+
+            print(colored(f"{app_name} --> {project_name}/{app_name}/templates Creating", "green"))
+        
+        if not(os.path.exists(f"{project_name}/{app_name}/static")):
+            os.mkdir(f"{project_name}/{app_name}/static")
+            os.mkdir(f"{project_name}/{app_name}/static/{app_name}")
+
+            os.mkdir(f"{project_name}/{app_name}/static/{app_name}/css")
+
+            with open(f"{project_name}/{app_name}/static/{app_name}/css/style.css", "w") as file:
+                file.write("")
+                file.write("/* Karoche css a */\n\n")
+                print(colored(f"{app_name} --> {project_name}/{app_name} CSS Creating", "green"))
+
+            print(colored(f"{app_name} --> {project_name}/{app_name}/static Creating", "green"))
 
 
 def app_urls(project_name, app_name):
-    with open(f"{project_name}/{app_name}/urls.py", "w") as file:
-        file.write("")
-        print(colored(f"{app_name} --> {project_name}/{app_name}/urls.py Creating", "green"))
-        file.write(f'from django.urls import path\nfrom . import views\n\nurlpatterns = [\n   path("", views.index, name = "index")\n]')
-        print(colored(f"{app_name} --> {project_name}/{app_name}/urls.py Changed", "green"))
+    
+    if os.name == 'nt':
+        with open(fr"{project_name}\{app_name}\urls.py", "w") as file:
+            file.write("")
+            print(colored(fr"{app_name} --> {project_name}\{app_name}\urls.py Creating", "green"))
+            file.write(f'from django.urls import path\nfrom . import views\n\nurlpatterns = [\n   path("", views.index, name = "index")\n]')
+            print(colored(fr"{app_name} --> {project_name}\{app_name}\urls.py Changed", "green"))
+    else:
+        with open(f"{project_name}/{app_name}/urls.py", "w") as file:
+            file.write("")
+            print(colored(f"{app_name} --> {project_name}/{app_name}/urls.py Creating", "green"))
+            file.write(f'from django.urls import path\nfrom . import views\n\nurlpatterns = [\n   path("", views.index, name = "index")\n]')
+            print(colored(f"{app_name} --> {project_name}/{app_name}/urls.py Changed", "green"))
         
 
 def app_views(project_name, app_name):
-    with open(f"{project_name}/{app_name}/views.py", "r") as text:
-        text = text.read()
-
-    with open(f"{project_name}/{app_name}/views.py", "a") as file:
-        print(colored(f"{app_name} --> {project_name}/{app_name}/views.py Creating", "green"))
-        if "def index(" not in text:
+    if os.name == 'nt':
+        with open(fr"{project_name}\{app_name}\views.py", "r") as text:
+            text = text.read()
+    
+        with open(fr"{project_name}\{app_name}\views.py", "a") as file:
+            print(colored(fr"{app_name} --> {project_name}\{app_name}\views.py Creating", "green"))
+            if "def index(" not in text:
+                
+                file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
             
-            file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
-        
-            print(colored(f"{app_name} --> {project_name}/{app_name}/views.py Changed", "green"))
+                print(colored(fr"{app_name} --> {project_name}\{app_name}\views.py Changed", "green"))
+    else:
+        with open(f"{project_name}/{app_name}/views.py", "r") as text:
+            text = text.read()
+
+        with open(f"{project_name}/{app_name}/views.py", "a") as file:
+            print(colored(f"{app_name} --> {project_name}/{app_name}/views.py Creating", "green"))
+            if "def index(" not in text:
+
+                file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
+
+                print(colored(f"{app_name} --> {project_name}/{app_name}/views.py Changed", "green"))
             
             
 def app_views(project_name, app_name):
-    with open(f"{project_name}/{app_name}/views.py", "r") as text:
-        text = text.read()
+    if os.name == 'nt':
+        with open(fr"{project_name}\{app_name}\views.py", "r") as text:
+            text = text.read()
+    
+        with open(fr"{project_name}\{app_name}\views.py", "a") as file:
+            if "def index(" not in text:
+                file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
+            
+            print(fr"{app_name} --> {app_name}\views.py Changed")
+    else:
+        with open(f"{project_name}/{app_name}/views.py", "r") as text:
+            text = text.read()
 
-    with open(f"{project_name}/{app_name}/views.py", "a") as file:
-        if "def index(" not in text:
-            file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
-        
-        print(f"{app_name} --> {app_name}/views.py Changed")
+        with open(f"{project_name}/{app_name}/views.py", "a") as file:
+            if "def index(" not in text:
+                file.write(f'\n\ndef index(request):\n    return render(request, "{app_name}/index.html")')
+
+            print(f"{app_name} --> {app_name}/views.py Changed")
 
 def static_media_apps(app_name, project_name):
-    with open(f"{project_name}/{project_name}/settings.py", "r") as file:
-        file = file.read()
+    
+    if os.name == "nt":
+        with open(fr"{project_name}\{project_name}\settings.py", "r") as file:
+            file = file.read()
+    else:
+        with open(f"{project_name}/{project_name}/settings.py", "r") as file:
+            file = file.read()
         
     installed_apps = file[file.index("INSTALLED_APPS") : file.index("MIDDLEWARE")-2]
     skzb_installed_apps = installed_apps
@@ -263,17 +325,26 @@ def static_media_apps(app_name, project_name):
     if "MEDIA_URL = 'media/'" not in file and "STATIC_ROOT = BASE_DIR/'static'" not in file and "MEDIA_ROOT = BASE_DIR/'media'" not in file:  
         file = file.replace("STATIC_URL = 'static/'", "STATIC_URL = 'static/'\nSTATIC_ROOT = BASE_DIR/'static'\n\nMEDIA_URL = 'media/'\nMEDIA_ROOT = BASE_DIR/'media'")
 
+    if os.name == "nt":
+        with open(fr"{project_name}\{project_name}\settings.py", "w") as new_text:
+            new_text.write(file)
 
-    with open(f"{project_name}/{project_name}/settings.py", "w") as new_text:
-        new_text.write(file)
+        print(colored(fr"\n{app_name} --> {project_name}\{project_name}\settings.py Changed", "green"))
+    else:
+        with open(f"{project_name}/{project_name}/settings.py", "w") as new_text:
+            new_text.write(file)
     
-    print(colored(f"\n{app_name} --> {project_name}/{project_name}/settings.py Changed", "green"))
-    
+        print(colored(f"\n{app_name} --> {project_name}/{project_name}/settings.py Changed", "green"))
+
 
 def urls_ch(project_name, app_name):
-    with open(f"{project_name}/{project_name}/urls.py", "r") as file:
-        file = file.read()
-    
+    if os.name == "nt":
+        with open(fr"{project_name}\{project_name}\urls.py", "r") as file:
+            file = file.read()
+    else:
+        with open(f"{project_name}/{project_name}/urls.py", "r") as file:
+            file = file.read()
+
     urlpatterns = file[file.index("urlpatterns = "):file.index("]")+1:]
     
     if f'path("", include("{app_name}.urls"))' not in urlpatterns:
@@ -282,12 +353,21 @@ def urls_ch(project_name, app_name):
     if " + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)" not in urlpatterns:
         urlpatterns += " + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)"
 
-    with open(f"{project_name}/{project_name}/urls.py", "w") as new_file:
-        new_file.write("from django.contrib import admin\nfrom django.urls import path, include\nfrom django.conf import settings\nfrom django.conf.urls.static import static\n\n")
-        new_file.write(urlpatterns)
-        new_file.write("")
-    
-    print(colored(f"{app_name} --> {project_name}/{project_name}/urls.py Changed", "green"))
+    if os.name == "nt":
+        with open(fr"{project_name}\{project_name}\urls.py", "w") as new_file:
+            new_file.write("from django.contrib import admin\nfrom django.urls import path, include\nfrom django.conf import settings\nfrom django.conf.urls.static import static\n\n")
+            new_file.write(urlpatterns)
+            new_file.write("")
+        
+        print(colored(fr"{app_name} --> {project_name}\{project_name}\urls.py Changed", "green"))
+
+    else:
+        with open(f"{project_name}/{project_name}/urls.py", "w") as new_file:
+            new_file.write("from django.contrib import admin\nfrom django.urls import path, include\nfrom django.conf import settings\nfrom django.conf.urls.static import static\n\n")
+            new_file.write(urlpatterns)
+            new_file.write("")
+
+        print(colored(f"{app_name} --> {project_name}/{project_name}/urls.py Changed", "green"))
 
                 
 def create_app(project_name, app_name):
@@ -307,8 +387,6 @@ def create_app(project_name, app_name):
 
 
                 if input(f"\nYou have created {app_name} in {project_name}, do you want to automatically configure settings.py, urls.py, connect statics and media? [y/n]: ").lower().strip() in ("yes", "y", "ya", "да", "д"):
-
-
 
                     try:
                         static_media_apps(app_name, project_name)
@@ -407,8 +485,6 @@ def main():
             print(colored("---------------------------------------\n", "red", attrs=["bold"]))
                 
 
-                
-                
 if __name__ == "__main__":
     main()
 
