@@ -3,6 +3,12 @@ import sys
 import time
 import platform
 
+
+
+if os.name == "nt":
+    os.system("python -m pip install --upgrade pip")
+else:
+    os.system("python3 -m pip install --upgrade pip")
         
 try:
     from termcolor import colored
@@ -19,7 +25,6 @@ except:
         print(colored("------------------------------------------------------------", "green"))
     else:
         sys.exit()
-
 
 try:
     from tqdm import tqdm
