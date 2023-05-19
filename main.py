@@ -379,39 +379,47 @@ def create_app(project_name, app_name):
     try:
         if os.path.exists(project_name):
             
-            if not(os.path.exists(f"{project_name}/{app_name}")):
-                os.system(f"cd {project_name} ; python manage.py startapp {app_name}")
+            if os.name == "nt":
+                if os.path.exists(fr"{project_name}\{app_name}"):
+                    print(colored("\n---------------------------------------", "red", attrs=["bold"]))
+                    print(colored(fr"  !! {project_name}\{app_name} Already exists  !! ", "red", attrs=["bold"]))
+                    print(colored("---------------------------------------\n", "red", attrs=["bold"]))
+                    return
+            else: 
+                if os.path.exists(f"{project_name}/{app_name}"):
+                    print(colored("\n---------------------------------------", "red", attrs=["bold"]))
+                    print(colored(f"  !! {project_name}/{app_name} Already exists  !! ", "red", attrs=["bold"]))
+                    print(colored("---------------------------------------\n", "red", attrs=["bold"]))
+                    return
+            
+            os.system(f"cd {project_name} ; python manage.py startapp {app_name}")
 
-                print(colored("\n------------------------------------------------------------", "green", attrs=["bold"]))
-                print(colored(f'!! Application {app_name} was successfully created in {project_name} !! ', "green", attrs=["bold"]))
-                print(colored("------------------------------------------------------------", "green", attrs=["bold"]), end = "\n\n")
+            print(colored("\n------------------------------------------------------------", "green", attrs=["bold"]))
+            print(colored(f'!! Application {app_name} was successfully created in {project_name} !! ', "green", attrs=["bold"]))
+            print(colored("------------------------------------------------------------", "green", attrs=["bold"]), end = "\n\n")
 
-                print(colored("\n----------------------------------------------------------------------------------------", "red", attrs=["bold"]))
-                print(colored(f'  !! Remember every time you create an application, it is added to the {project_name}/urls.py !! ', "red", attrs=["bold"]))
-                print(colored("----------------------------------------------------------------------------------------", "red", attrs=["bold"]), end = "\n\n")
+            print(colored("\n----------------------------------------------------------------------------------------", "red", attrs=["bold"]))
+            print(colored(f'  !! Remember every time you create an application, it is added to the {project_name}/urls.py !! ', "red", attrs=["bold"]))
+            print(colored("----------------------------------------------------------------------------------------", "red", attrs=["bold"]), end = "\n\n")
 
 
-                if input(f"\nYou have created {app_name} in {project_name}, do you want to automatically configure settings.py, urls.py, connect statics and media? [y/n]: ").lower().strip() in ("yes", "y", "ya", "да", "д"):
+            if input(f"\nYou have created {app_name} in {project_name}, do you want to automatically configure settings.py, urls.py, connect statics and media? [y/n]: ").lower().strip() in ("yes", "y", "ya", "да", "д"):
 
-                    try:
-                        static_media_apps(app_name, project_name)
-                        template_creating(project_name, app_name)
-                        app_urls(project_name, app_name)
-                        app_views(project_name, app_name)
-                        urls_ch(project_name, app_name)
-                    except:
-                        print(colored("\n---------------------------------------", "red", attrs=["bold"]))
-                        print(colored("  !! Something went wrong !! ", "red", attrs=["bold"]), end = "\n\n")
-                        print(colored("  Exception: ", "white", attrs=["bold"]), end = "")
-                        print(colored(f"{ex} ", "white"))
-                        print(colored("---------------------------------------\n", "red", attrs=["bold"]))
+                try:
+                    static_media_apps(app_name, project_name)
+                    template_creating(project_name, app_name)
+                    app_urls(project_name, app_name)
+                    app_views(project_name, app_name)
+                    urls_ch(project_name, app_name)
+                except:
+                    print(colored("\n---------------------------------------", "red", attrs=["bold"]))
+                    print(colored("  !! Something went wrong !! ", "red", attrs=["bold"]), end = "\n\n")
+                    print(colored("  Exception: ", "white", attrs=["bold"]), end = "")
+                    print(colored(f"{ex} ", "white"))
+                    print(colored("---------------------------------------\n", "red", attrs=["bold"]))
 
-                else:
-                    sys.exit()
             else:
-                print(colored("\n---------------------------------------", "red", attrs=["bold"]))
-                print(colored(f"  !! {project_name}/{app_name} Already exists  !! ", "red", attrs=["bold"]))
-                print(colored("---------------------------------------\n", "red", attrs=["bold"]))
+                sys.exit()
         
         else:
             print(colored("\n-----------------------------------------", "red", attrs=["bold"]))
